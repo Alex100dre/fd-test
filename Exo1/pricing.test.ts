@@ -1,4 +1,4 @@
-import { calculateDiscount } from './pricing';
+import {calculateDiscount, DiscountType} from './pricing';
 
 describe('calculateDiscount', () => {
     describe('Type 1 - Aucune remise', () => {
@@ -110,9 +110,9 @@ describe('calculateDiscount', () => {
 
     describe('Cas limites et types invalides', () => {
         it('devrait retourner 0 pour un type invalide', () => {
-            expect(calculateDiscount(100, 0, 0)).toBe(0);
-            expect(calculateDiscount(100, 5, 0)).toBe(0);
-            expect(calculateDiscount(100, -1, 0)).toBe(0);
+            expect(calculateDiscount(100, 0 as DiscountType, 0)).toBe(0);
+            expect(calculateDiscount(100, 5 as DiscountType, 0)).toBe(0);
+            expect(calculateDiscount(100, -1 as DiscountType, 0)).toBe(0);
         });
 
         it('devrait gérer les montants à 0', () => {
