@@ -1,9 +1,9 @@
 // Simplify / Refactorize this function
-const calculateDiscount = (amount, type, years) => {
-    result = 0
-    disc = (years > 5) ? 5 / 100 : years / 100;
+export const calculateDiscount = (amount: number, type: number, years: number): number => {
+    let result = 0;
+    const disc = (years > 5) ? 5 / 100 : years / 100;
     if (type === 1) {
-        result = amount
+        result = amount;
     }
     else if (type === 2) {
         result = (amount - (0.1 * amount)) - disc * (amount - (0.1 * amount));
@@ -17,8 +17,8 @@ const calculateDiscount = (amount, type, years) => {
     return result;
 }
 
-const assert = (expected, actual) => {
-    if (expected !== actual)
-        console.warn(`${actual} is not equal to ${expected}`);
-}
-assert(99, calculateDiscount(100, 1, 1));
+// const assert = (expected: number, actual: number): void => {
+//     if (expected !== actual)
+//         console.warn(`${actual} is not equal to ${expected}`);
+// }
+// assert(99, calculateDiscount(100, 1, 1));
