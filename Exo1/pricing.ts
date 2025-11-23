@@ -5,7 +5,7 @@ export enum DiscountType {
     GOLD = 3,
     PLATINUM = 4
 }
-const DISCOUNT_BY_TYPE: Record<DiscountType, number> = {
+const DISCOUNT_RATE_BY_TYPE: Record<DiscountType, number> = {
     [DiscountType.BRONZE]: 0,
     [DiscountType.SILVER]: 0.1,  // 10%
     [DiscountType.GOLD]: 0.3,    // 30%
@@ -18,7 +18,7 @@ const DISCOUNT_BY_TYPE: Record<DiscountType, number> = {
 export const calculateDiscount = (amount: number, type: DiscountType, years: number): number => {
     let result = 0;
     const discountByLoyaltyYears = (years > 5) ? 5 / 100 : years / 100;
-    const discountByType = DISCOUNT_BY_TYPE[type]
+    const discountRateByType = getDiscountRateByType(type)
 
     // TODO: Il va certainement falloir ajouter des exceptions ou autre au lieu de renvoyer 0 car ça n'a pas de sens d'avoir un article gratuit si on envoie un mauvais type de reduc
     if(!checkIfTypeExist(type)) return result;
@@ -27,17 +27,26 @@ export const calculateDiscount = (amount: number, type: DiscountType, years: num
         return amount;
     }
 
-    result = computeDiscount(amount, discountByType, discountByLoyaltyYears)
+    result = applyDiscount(amount, discountRateByType, discountByLoyaltyYears)
 
     return result;
 }
 
-const computeDiscount = (amount: number, discountByType: number, discountByLoyaltyYears: number): number => {
-    return (amount - (discountByType * amount)) - discountByLoyaltyYears * (amount - (discountByType * amount));
+export const getDiscountRateByType = (type: DiscountType): number => {
+    return DISCOUNT_RATE_BY_TYPE[type] ?? 0;
+};
+
+export const applyDiscount = (amount: number, discountRateByType: number, discountByLoyaltyYears: number): number => {
+    // On a besoin d'arrondir car le calcul renvoi plusieurs décimales après la virgule et ça casse les tests. Puis c'est pas logique d'avoir un prix avec plus de 2 décimales (cf: https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places)
+    return round(amount * (1 - discountByLoyaltyYears) * (1 - discountRateByType));
 }
 
-const checkIfTypeExist = (type: DiscountType): boolean => {
+export const checkIfTypeExist = (type: DiscountType): boolean => {
     return Object.values(DiscountType).includes(type)
+}
+
+export const round = (amount: number): number => {
+    return parseFloat(amount.toFixed(2))
 }
 
 // const assert = (expected: number, actual: number): void => {
