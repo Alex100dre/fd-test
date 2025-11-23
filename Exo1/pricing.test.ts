@@ -2,26 +2,26 @@ import {applyDiscount, applyDiscounts, calculateDiscount, calculateDiscountRateB
 
 describe('pricing', () => {
     describe('calculateDiscount', () => {
-        describe('Type 1 - Aucune remise', () => {
+        describe('Type 1 - BRONZE (aucune remise de type, mais remise de fidélité)', () => {
             it("devrait retourner le montant complet avec 0 année de fidélité", () => {
                 expect(calculateDiscount(100, 1, 0)).toBe(100);
             });
 
-            it("devrait retourner le montant complet avec 1 année de fidélité", () => {
-                expect(calculateDiscount(100, 1, 1)).toBe(100);
+            it("devrait appliquer 1% de fidélité avec 1 année de fidélité", () => {
+                expect(calculateDiscount(100, 1, 1)).toBe(99);
             });
 
-            it("devrait retourner le montant complet avec 3 années de fidélité", () => {
-                expect(calculateDiscount(100, 1, 3)).toBe(100);
+            it("devrait appliquer 3% de fidélité avec 3 années de fidélité", () => {
+                expect(calculateDiscount(100, 1, 3)).toBe(97);
             });
 
-            it("devrait retourner le montant complet avec 5 années de fidélité", () => {
-                expect(calculateDiscount(100, 1, 5)).toBe(100);
+            it("devrait appliquer 5% de fidélité avec 5 années de fidélité", () => {
+                expect(calculateDiscount(100, 1, 5)).toBe(95);
             });
 
-            it("devrait retourner le montant complet avec plus de 5 années de fidélité", () => {
-                expect(calculateDiscount(100, 1, 10)).toBe(100);
-                expect(calculateDiscount(100, 1, 20)).toBe(100);
+            it("devrait plafonner la remise fidélité à 5% avec plus de 5 années de fidélité", () => {
+                expect(calculateDiscount(100, 1, 10)).toBe(95);
+                expect(calculateDiscount(100, 1, 20)).toBe(95);
             });
         });
 
@@ -125,15 +125,15 @@ describe('pricing', () => {
 
             it('devrait gérer les années négatives', () => {
                 // Avec years négatif, disc sera négatif/100, donc on ajoute au lieu de soustraire
-                // Type 1 retourne juste amount donc pas d'effet
-                expect(calculateDiscount(100, 1, -1)).toBe(100);
+                // Type 1: 100 - 0% = 100, puis 100 - (-1%) = 100 + 1 = 101
+                expect(calculateDiscount(100, 1, -1)).toBe(101);
                 // Type 2: 100 - 10% - (-0.01 (car -1/100) * 90) = 90 + 0.9 (car --0.9) = 90.9
                 expect(calculateDiscount(100, 2, -1)).toBe(90.9);
             });
 
             it('devrait gérer les montants décimaux', () => {
-                // Type 1 retourne juste le montant
-                expect(calculateDiscount(99.99, 1, 1)).toBeCloseTo(99.99, 2);
+                // Type 1: 99.99 - 0% = 99.99, puis 99.99 - 1% = 98.9901 ≈ 98.99
+                expect(calculateDiscount(99.99, 1, 1)).toBeCloseTo(98.99, 2);
                 expect(calculateDiscount(50.50, 2, 2)).toBeCloseTo(44.541, 2);
             });
 
@@ -161,8 +161,8 @@ describe('pricing', () => {
             });
 
             it('devrait gérer de grands montants', () => {
-                // Type 1 retourne juste le montant
-                expect(calculateDiscount(10000, 1, 5)).toBe(10000);
+                // Type 1: 10000 - 0% = 10000, puis 10000 - 5% = 9500
+                expect(calculateDiscount(10000, 1, 5)).toBe(9500);
                 expect(calculateDiscount(10000, 4, 5)).toBe(4750);
             });
         });

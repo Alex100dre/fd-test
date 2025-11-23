@@ -38,10 +38,6 @@ export const calculateDiscount = (amount: number, type: DiscountType, years: num
     // TODO: Il va certainement falloir ajouter des exceptions ou autre au lieu de renvoyer 0 car ça n'a pas de sens d'avoir un article gratuit si on envoie un mauvais type de reduc
     if(!checkIfTypeExist(type)) return AMOUNT_FOR_INEXISTENT_DISCOUNT_TYPE;
 
-    if (type === DiscountType.BRONZE) {
-        return amount;
-    }
-
     // On a besoin d'arrondir car le calcul renvoi plusieurs décimales après la virgule et ça casse les tests. Puis c'est pas logique d'avoir un prix avec plus de 2 décimales (cf: https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places)
     return round(applyDiscounts(amount, discountRateByType, discountRateByLoyaltyYears));
 }
@@ -111,8 +107,9 @@ export const round = (amount: number): number => {
     return parseFloat(amount.toFixed(2))
 }
 
-// const assert = (expected: number, actual: number): void => {
-//     if (expected !== actual)
-//         console.warn(`${actual} is not equal to ${expected}`);
-// }
-// assert(99, calculateDiscount(100, 1, 1));
+// TODO : J'ai supprimé le contrôle qui renvoyait le montant sans remise pour le type Bronze. Car ce bout de code laisse à penser que ce n'est pas le comportement attendu (à valider)
+const assert = (expected: number, actual: number): void => {
+    if (expected !== actual)
+        console.warn(`${actual} is not equal to ${expected}`);
+}
+assert(99, calculateDiscount(100, 1, 1));
