@@ -1,4 +1,4 @@
-import {applyDiscount, calculateDiscount, checkIfTypeExist, DiscountType, getDiscountRateByType, round} from './pricing';
+import {applyDiscount, calculateDiscount, calculateDiscountRateByLoyaltyYears, checkIfTypeExist, DiscountType, getDiscountRateByType, round} from './pricing';
 
 describe('pricing', () => {
     describe('calculateDiscount', () => {
@@ -313,6 +313,51 @@ describe('pricing', () => {
         it('devrait gérer les grands nombres', () => {
             expect(round(9999.999)).toBe(10000);
             expect(round(123456.789)).toBe(123456.79);
+        });
+    })
+
+    describe('calculateDiscountRateByLoyaltyYears', () => {
+        it('devrait retourner 0 pour 0 année de fidélité', () => {
+            expect(calculateDiscountRateByLoyaltyYears(0)).toBe(0);
+        });
+
+        it('devrait retourner 0.01 pour 1 année de fidélité', () => {
+            expect(calculateDiscountRateByLoyaltyYears(1)).toBe(0.01);
+        });
+
+        it('devrait retourner 0.02 pour 2 années de fidélité', () => {
+            expect(calculateDiscountRateByLoyaltyYears(2)).toBe(0.02);
+        });
+
+        it('devrait retourner 0.03 pour 3 années de fidélité', () => {
+            expect(calculateDiscountRateByLoyaltyYears(3)).toBe(0.03);
+        });
+
+        it('devrait retourner 0.05 pour 5 années de fidélité', () => {
+            expect(calculateDiscountRateByLoyaltyYears(5)).toBe(0.05);
+        });
+
+        it('devrait plafonner à 0.05 pour plus de 5 années de fidélité', () => {
+            expect(calculateDiscountRateByLoyaltyYears(6)).toBe(0.05);
+            expect(calculateDiscountRateByLoyaltyYears(10)).toBe(0.05);
+            expect(calculateDiscountRateByLoyaltyYears(100)).toBe(0.05);
+        });
+
+        it('devrait gérer les années décimales', () => {
+            expect(calculateDiscountRateByLoyaltyYears(1.5)).toBe(0.015);
+            expect(calculateDiscountRateByLoyaltyYears(2.5)).toBe(0.025);
+            expect(calculateDiscountRateByLoyaltyYears(3.7)).toBe(0.037);
+        });
+
+        it('devrait plafonner les années décimales au-delà de 5', () => {
+            expect(calculateDiscountRateByLoyaltyYears(5.5)).toBe(0.05);
+            expect(calculateDiscountRateByLoyaltyYears(7.3)).toBe(0.05);
+            expect(calculateDiscountRateByLoyaltyYears(10.9)).toBe(0.05);
+        });
+
+        it('devrait gérer les années négatives', () => {
+            expect(calculateDiscountRateByLoyaltyYears(-1)).toBe(-0.01);
+            expect(calculateDiscountRateByLoyaltyYears(-5)).toBe(-0.05);
         });
     })
 })

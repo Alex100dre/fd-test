@@ -12,12 +12,15 @@ const DISCOUNT_RATE_BY_TYPE: Record<DiscountType, number> = {
     [DiscountType.PLATINUM]: 0.5 // 50%
 };
 
+const LOYALTY_DISCOUNT_RATE_PER_YEAR = 0.01; // 1%
+const MAX_LOYALTY_YEARS = 5;
+
 //#endregion
 
 // Simplify / Refactorize this function
 export const calculateDiscount = (amount: number, type: DiscountType, years: number): number => {
     let result = 0;
-    const discountByLoyaltyYears = (years > 5) ? 5 / 100 : years / 100;
+    const discountByLoyaltyYears = calculateDiscountRateByLoyaltyYears(years)
     const discountRateByType = getDiscountRateByType(type)
 
     // TODO: Il va certainement falloir ajouter des exceptions ou autre au lieu de renvoyer 0 car ça n'a pas de sens d'avoir un article gratuit si on envoie un mauvais type de reduc
@@ -30,6 +33,11 @@ export const calculateDiscount = (amount: number, type: DiscountType, years: num
     result = applyDiscount(amount, discountRateByType, discountByLoyaltyYears)
 
     return result;
+}
+
+export const calculateDiscountRateByLoyaltyYears = (years: number) => {
+    const cappedYears = Math.min(years, MAX_LOYALTY_YEARS);
+    return cappedYears * LOYALTY_DISCOUNT_RATE_PER_YEAR;
 }
 
 export const getDiscountRateByType = (type: DiscountType): number => {
