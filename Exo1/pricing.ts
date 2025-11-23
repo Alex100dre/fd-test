@@ -19,6 +19,7 @@ const DISCOUNT_RATE_BY_TYPE: Record<DiscountType, number> = {
 
 const LOYALTY_DISCOUNT_RATE_PER_YEAR = 0.01; // 1%
 const MAX_LOYALTY_YEARS = 5;
+const AMOUNT_FOR_INEXISTENT_DISCOUNT_TYPE = 0;
 
 //#endregion
 
@@ -31,20 +32,18 @@ const MAX_LOYALTY_YEARS = 5;
  * @returns {number} Montant final après application des réductions, arrondi à 2 décimales
  */
 export const calculateDiscount = (amount: number, type: DiscountType, years: number): number => {
-    let result = 0;
-    const discountByLoyaltyYears = calculateDiscountRateByLoyaltyYears(years)
+    const discountRateByLoyaltyYears = calculateDiscountRateByLoyaltyYears(years)
     const discountRateByType = getDiscountRateByType(type)
 
     // TODO: Il va certainement falloir ajouter des exceptions ou autre au lieu de renvoyer 0 car ça n'a pas de sens d'avoir un article gratuit si on envoie un mauvais type de reduc
-    if(!checkIfTypeExist(type)) return result;
+    if(!checkIfTypeExist(type)) return AMOUNT_FOR_INEXISTENT_DISCOUNT_TYPE;
 
     if (type === DiscountType.BRONZE) {
         return amount;
     }
 
-    result = applyDiscount(amount, discountRateByType, discountByLoyaltyYears)
-
-    return result;
+    // On a besoin d'arrondir car le calcul renvoi plusieurs décimales après la virgule et ça casse les tests. Puis c'est pas logique d'avoir un prix avec plus de 2 décimales (cf: https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places)
+    return round(applyDiscounts(amount, discountRateByType, discountRateByLoyaltyYears));
 }
 
 /**
@@ -73,13 +72,24 @@ export const getDiscountRateByType = (type: DiscountType): number => {
  *
  * @param {number} amount - Montant de base
  * @param {number} discountRateByType - Taux de réduction selon le type
- * @param {number} discountByLoyaltyYears - Taux de réduction selon les années de fidélité
- * @returns {number} Montant après application des réductions, arrondi à 2 décimales
+ * @param {number} discountRateByLoyaltyYears - Taux de réduction selon les années de fidélité
+ * @returns {number} Montant après application des réductions
  */
-export const applyDiscount = (amount: number, discountRateByType: number, discountByLoyaltyYears: number): number => {
-    // On a besoin d'arrondir car le calcul renvoi plusieurs décimales après la virgule et ça casse les tests. Puis c'est pas logique d'avoir un prix avec plus de 2 décimales (cf: https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places)
-    return round(amount * (1 - discountByLoyaltyYears) * (1 - discountRateByType));
+export const applyDiscounts = (amount: number, discountRateByType: number, discountRateByLoyaltyYears: number): number => {
+    const amountAfterTypeDiscount = applyDiscount(amount, discountRateByType)
+    return applyDiscount(amountAfterTypeDiscount, discountRateByLoyaltyYears)
 }
+
+/**
+ * Applique un taux de réduction sur un montant
+ *
+ * @param {number} amount - Montant de base
+ * @param {number} discountRate - Taux de réduction à appliquer (0 pour 0%, 1 pour 100%)
+ * @returns {number} Montant après application de la réduction
+ */
+export const applyDiscount = (amount: number, discountRate: number): number => {
+    return amount * (1 - discountRate);
+};
 
 /**
  * Vérifie si un type de réduction est valide

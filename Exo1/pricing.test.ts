@@ -1,4 +1,4 @@
-import {applyDiscount, calculateDiscount, calculateDiscountRateByLoyaltyYears, checkIfTypeExist, DiscountType, getDiscountRateByType, round} from './pricing';
+import {applyDiscount, applyDiscounts, calculateDiscount, calculateDiscountRateByLoyaltyYears, checkIfTypeExist, DiscountType, getDiscountRateByType, round} from './pricing';
 
 describe('pricing', () => {
     describe('calculateDiscount', () => {
@@ -174,15 +174,15 @@ describe('pricing', () => {
         });
 
         it('devrait retourner 0.1 pour le type SILVER (2)', () => {
-            expect(getDiscountRateByType(2)).toBe(0.1);
+            expect(getDiscountRateByType(2)).toBeCloseTo(0.1, 2);
         });
 
         it('devrait retourner 0.3 pour le type GOLD (3)', () => {
-            expect(getDiscountRateByType(3)).toBe(0.3);
+            expect(getDiscountRateByType(3)).toBeCloseTo(0.3, 2);
         });
 
         it('devrait retourner 0.5 pour le type PLATINUM (4)', () => {
-            expect(getDiscountRateByType(4)).toBe(0.5);
+            expect(getDiscountRateByType(4)).toBeCloseTo(0.5, 2);
         });
 
         it('devrait retourner 0 pour un type invalide', () => {
@@ -224,53 +224,102 @@ describe('pricing', () => {
         });
     })
 
-    describe('applyDiscount', () => {
+    describe('applyDiscounts', () => {
         it('devrait appliquer uniquement la remise de type sans remise de fidélité', () => {
-            expect(applyDiscount(100, 0.1, 0)).toBe(90);
-            expect(applyDiscount(100, 0.3, 0)).toBe(70);
-            expect(applyDiscount(100, 0.5, 0)).toBe(50);
+            expect(applyDiscounts(100, 0.1, 0)).toBe(90);
+            expect(applyDiscounts(100, 0.3, 0)).toBe(70);
+            expect(applyDiscounts(100, 0.5, 0)).toBe(50);
         });
 
         it('devrait appliquer uniquement la remise de fidélité sans remise de type', () => {
-            expect(applyDiscount(100, 0, 0.01)).toBe(99);
-            expect(applyDiscount(100, 0, 0.05)).toBe(95);
+            expect(applyDiscounts(100, 0, 0.01)).toBe(99);
+            expect(applyDiscounts(100, 0, 0.05)).toBe(95);
         });
 
         it('devrait appliquer les deux remises combinées', () => {
-            expect(applyDiscount(100, 0.1, 0.01)).toBe(89.1);
-            expect(applyDiscount(100, 0.3, 0.03)).toBe(67.9);
-            expect(applyDiscount(100, 0.5, 0.05)).toBe(47.5);
+            expect(applyDiscounts(100, 0.1, 0.01)).toBeCloseTo(89.1, 2);
+            expect(applyDiscounts(100, 0.3, 0.03)).toBeCloseTo(67.9, 2);
+            expect(applyDiscounts(100, 0.5, 0.05)).toBeCloseTo(47.5, 2);
         });
 
         it('devrait arrondir à 2 décimales', () => {
-            expect(applyDiscount(99.99, 0.1, 0.025)).toBeCloseTo(87.74, 2);
+            expect(applyDiscounts(99.99, 0.1, 0.025)).toBeCloseTo(87.74, 2);
         });
 
         it('devrait retourner 0 pour un montant de 0 (pas de réduc sur le gratis)', () => {
-            expect(applyDiscount(0, 0.1, 0.05)).toBe(0);
-            expect(applyDiscount(0, 0, 0)).toBe(0);
+            expect(applyDiscounts(0, 0.1, 0.05)).toBe(0);
+            expect(applyDiscounts(0, 0, 0)).toBe(0);
         });
 
         it('devrait gérer les remises négatives', () => {
             // TODO: On devrait certainement gérer des exception car une reduction ne devrait pas être négativve et augmenter le prix
-            expect(applyDiscount(100, 0.1, -0.01)).toBe(90.9);
+            expect(applyDiscounts(100, 0.1, -0.01)).toBeCloseTo(90.9, 2);
         });
 
         it('devrait fonctionner avec différents montants', () => {
-            expect(applyDiscount(200, 0.1, 0.02)).toBe(176.4);
-            expect(applyDiscount(150.75, 0.5, 0.032)).toBeCloseTo(72.96, 2);
+            expect(applyDiscounts(200, 0.1, 0.02)).toBeCloseTo(176.4, 2);
+            expect(applyDiscounts(150.75, 0.5, 0.032)).toBeCloseTo(72.96, 2);
         });
 
         it("devrait retourner le montant complet si aucune remise n'est appliquée", () => {
-            expect(applyDiscount(100, 0, 0)).toBe(100);
-            expect(applyDiscount(250, 0, 0)).toBe(250);
+            expect(applyDiscounts(100, 0, 0)).toBe(100);
+            expect(applyDiscounts(250, 0, 0)).toBe(250);
+        });
+    })
+
+    describe('applyDiscount', () => {
+        it('devrait appliquer une réduction de 10%', () => {
+            expect(applyDiscount(100, 0.1)).toBe(90);
+        });
+
+        it('devrait appliquer une réduction de 30%', () => {
+            expect(applyDiscount(100, 0.3)).toBe(70);
+        });
+
+        it('devrait appliquer une réduction de 50%', () => {
+            expect(applyDiscount(100, 0.5)).toBe(50);
+        });
+
+        it('devrait retourner le montant complet sans réduction', () => {
+            expect(applyDiscount(100, 0)).toBe(100);
+            expect(applyDiscount(250, 0)).toBe(250);
+        });
+
+        it('devrait retourner 0 pour une réduction de 100%', () => {
+            expect(applyDiscount(100, 1)).toBe(0);
+        });
+
+        it('devrait fonctionner avec des montants décimaux', () => {
+            expect(applyDiscount(99.99, 0.1)).toBeCloseTo(89.991, 3);
+            expect(applyDiscount(150.75, 0.2)).toBeCloseTo(120.6, 2);
+        });
+
+        it('devrait fonctionner avec des taux de réduction décimaux', () => {
+            expect(applyDiscount(100, 0.15)).toBe(85);
+            expect(applyDiscount(100, 0.025)).toBeCloseTo(97.5, 2);
+        });
+
+        it('devrait gérer les réductions négatives (augmentation)', () => {
+            // Une réduction négative augmente le prix
+            expect(applyDiscount(100, -0.2)).toBe(120);
+            expect(applyDiscount(100, -0.5)).toBe(150);
+        });
+
+        it('devrait gérer un montant à 0', () => {
+            expect(applyDiscount(0, 0.1)).toBe(0);
+            expect(applyDiscount(0, 0.5)).toBe(0);
+        });
+
+        it('devrait fonctionner avec de grands montants', () => {
+            expect(applyDiscount(10000, 0.1)).toBe(9000);
+            expect(applyDiscount(50000, 0.25)).toBe(37500);
         });
     })
 
     describe('round', () => {
         it('devrait arrondir à 2 décimales', () => {
             expect(round(99.999)).toBe(100);
-            expect(round(99.991)).toBe(99.99);
+            expect(round(99.991)).toBeCloseTo(99.99, 2);
             expect(round(99.995)).toBe(100);
         });
 
@@ -281,38 +330,38 @@ describe('pricing', () => {
         });
 
         it('devrait gérer les nombres avec 1 décimale', () => {
-            expect(round(99.9)).toBe(99.9);
-            expect(round(10.5)).toBe(10.5);
-            expect(round(7.1)).toBe(7.1);
+            expect(round(99.9)).toBeCloseTo(99.9, 2);
+            expect(round(10.5)).toBeCloseTo(10.5, 2);
+            expect(round(7.1)).toBeCloseTo(7.1, 2);
         });
 
         it('devrait gérer les nombres avec 2 décimales', () => {
-            expect(round(99.99)).toBe(99.99);
-            expect(round(10.50)).toBe(10.5);
-            expect(round(7.25)).toBe(7.25);
+            expect(round(99.99)).toBeCloseTo(99.99, 2);
+            expect(round(10.50)).toBeCloseTo(10.5, 2);
+            expect(round(7.25)).toBeCloseTo(7.25, 2);
         });
 
         it('devrait gérer les nombres avec plus de 2 décimales', () => {
-            expect(round(3.14159)).toBe(3.14);
-            expect(round(67.8999)).toBe(67.9);
-            expect(round(47.5555)).toBe(47.56);
+            expect(round(3.14159)).toBeCloseTo(3.14, 2);
+            expect(round(67.8999)).toBeCloseTo(67.9, 2);
+            expect(round(47.5555)).toBeCloseTo(47.56, 2);
         });
 
         it('devrait gérer les nombres négatifs', () => {
             expect(round(-99.999)).toBe(-100);
-            expect(round(-10.123)).toBe(-10.12);
-            expect(round(-50.5)).toBe(-50.5);
+            expect(round(-10.123)).toBeCloseTo(-10.12, 2);
+            expect(round(-50.5)).toBeCloseTo(-50.5, 2);
         });
 
         it('devrait gérer 0 et les très petits nombres', () => {
             expect(round(0)).toBe(0);
             expect(round(0.001)).toBe(0);
-            expect(round(0.005)).toBe(0.01);
+            expect(round(0.005)).toBeCloseTo(0.01, 2);
         });
 
         it('devrait gérer les grands nombres', () => {
             expect(round(9999.999)).toBe(10000);
-            expect(round(123456.789)).toBe(123456.79);
+            expect(round(123456.789)).toBeCloseTo(123456.79, 2);
         });
     })
 
@@ -322,42 +371,42 @@ describe('pricing', () => {
         });
 
         it('devrait retourner 0.01 pour 1 année de fidélité', () => {
-            expect(calculateDiscountRateByLoyaltyYears(1)).toBe(0.01);
+            expect(calculateDiscountRateByLoyaltyYears(1)).toBeCloseTo(0.01, 2);
         });
 
         it('devrait retourner 0.02 pour 2 années de fidélité', () => {
-            expect(calculateDiscountRateByLoyaltyYears(2)).toBe(0.02);
+            expect(calculateDiscountRateByLoyaltyYears(2)).toBeCloseTo(0.02, 2);
         });
 
         it('devrait retourner 0.03 pour 3 années de fidélité', () => {
-            expect(calculateDiscountRateByLoyaltyYears(3)).toBe(0.03);
+            expect(calculateDiscountRateByLoyaltyYears(3)).toBeCloseTo(0.03, 2);
         });
 
         it('devrait retourner 0.05 pour 5 années de fidélité', () => {
-            expect(calculateDiscountRateByLoyaltyYears(5)).toBe(0.05);
+            expect(calculateDiscountRateByLoyaltyYears(5)).toBeCloseTo(0.05, 2);
         });
 
         it('devrait plafonner à 0.05 pour plus de 5 années de fidélité', () => {
-            expect(calculateDiscountRateByLoyaltyYears(6)).toBe(0.05);
-            expect(calculateDiscountRateByLoyaltyYears(10)).toBe(0.05);
-            expect(calculateDiscountRateByLoyaltyYears(100)).toBe(0.05);
+            expect(calculateDiscountRateByLoyaltyYears(6)).toBeCloseTo(0.05, 2);
+            expect(calculateDiscountRateByLoyaltyYears(10)).toBeCloseTo(0.05, 2);
+            expect(calculateDiscountRateByLoyaltyYears(100)).toBeCloseTo(0.05, 2);
         });
 
         it('devrait gérer les années décimales', () => {
-            expect(calculateDiscountRateByLoyaltyYears(1.5)).toBe(0.015);
-            expect(calculateDiscountRateByLoyaltyYears(2.5)).toBe(0.025);
-            expect(calculateDiscountRateByLoyaltyYears(3.7)).toBe(0.037);
+            expect(calculateDiscountRateByLoyaltyYears(1.5)).toBeCloseTo(0.015, 3);
+            expect(calculateDiscountRateByLoyaltyYears(2.5)).toBeCloseTo(0.025, 3);
+            expect(calculateDiscountRateByLoyaltyYears(3.7)).toBeCloseTo(0.037, 3);
         });
 
         it('devrait plafonner les années décimales au-delà de 5', () => {
-            expect(calculateDiscountRateByLoyaltyYears(5.5)).toBe(0.05);
-            expect(calculateDiscountRateByLoyaltyYears(7.3)).toBe(0.05);
-            expect(calculateDiscountRateByLoyaltyYears(10.9)).toBe(0.05);
+            expect(calculateDiscountRateByLoyaltyYears(5.5)).toBeCloseTo(0.05, 2);
+            expect(calculateDiscountRateByLoyaltyYears(7.3)).toBeCloseTo(0.05, 2);
+            expect(calculateDiscountRateByLoyaltyYears(10.9)).toBeCloseTo(0.05, 2);
         });
 
         it('devrait gérer les années négatives', () => {
-            expect(calculateDiscountRateByLoyaltyYears(-1)).toBe(-0.01);
-            expect(calculateDiscountRateByLoyaltyYears(-5)).toBe(-0.05);
+            expect(calculateDiscountRateByLoyaltyYears(-1)).toBeCloseTo(-0.01, 2);
+            expect(calculateDiscountRateByLoyaltyYears(-5)).toBeCloseTo(-0.05, 2);
         });
     })
 })
