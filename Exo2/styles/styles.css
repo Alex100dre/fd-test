@@ -84,6 +84,10 @@ table {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Amaranth", sans-serif;
   font-size: 1rem;
@@ -116,6 +120,39 @@ body {
   color: #ffffff;
   position: relative;
   z-index: 1;
+}
+
+.nav {
+  background-color: #2c2e3e;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+}
+.nav__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.nav__item--right {
+  margin-left: auto;
+}
+.nav__link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  transition: opacity 0.3s ease;
+}
+.nav__link:hover, .nav__link:focus {
+  opacity: 0.7;
+}
+.nav__link:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
 }
 
 /*# sourceMappingURL=styles.css.map */
