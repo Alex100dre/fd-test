@@ -1,0 +1,7 @@
+@use 'variables' as *;
+
+body {
+    font-family: $font-family-primary;
+    font-size: $font-size-text;
+    line-height: 1.6;
+}
