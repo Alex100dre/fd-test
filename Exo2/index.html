@@ -30,12 +30,71 @@
         CARROUSEL
     </section>
 
-    <section id="carrousel2" style="min-height: 60vh; background-color: #00ff00; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+    <section id="carrousel2" style="min-height: 60vh; background-color: #0000ffff; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
         CARROUSEL 2
     </section>
 
-    <footer id="footer" style="min-height: 60vh; background-color: #0000ff; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-        FOOTER
+    <footer id="footer" class="footer">
+        <div class="footer__content">
+            <div class="footer__column">
+                <h2 class="footer__title">Services</h2>
+                <ul class="footer__menu">
+                    <li class="footer__menu-item">
+                        <a href="https://le-dev.com" class="footer__menu-link">L'empire</a>
+                    </li>
+                    <li class="footer__menu-item">
+                        <a href="https://le-dev.com" class="footer__menu-link">Stormtrooper</a>
+                    </li>
+                    <li class="footer__menu-item">
+                        <a href="https://le-dev.com" class="footer__menu-link">Premier Ordre</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__column">
+                <h2 class="footer__title">À propos</h2>
+                <ul class="footer__menu">
+                    <li class="footer__menu-item">
+                        <a href="https://le-dev.com" class="footer__menu-link">Anciens officiers impériaux</a>
+                    </li>
+                    <li class="footer__menu-item">
+                        <a href="https://le-dev.com" class="footer__menu-link">Les journées portes ouvertes</a>
+                    </li>
+                    <li class="footer__menu-item">
+                        <a href="https://le-dev.com" class="footer__menu-link">L'empire recrute</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__column footer__column--wide">
+                <h2 class="footer__title">Le Centre Galactique</h2>
+                <p class="footer__text">
+                    Plus de 30 ans après la bataille d'Endor, nous avons su consolider nos forces
+                    afin de retrouver notre gloire. Les membres de l'Alliance rebelle, devenus la « Résistance » se
+                    risquent à combattre l'Empire seules dans la bannière du « Premier Ordre ».
+                </p>
+            </div>
+        </div>
+
+        <div class="footer__social">
+            <a href="https://facebook.com" class="footer__social-link" aria-label="Facebook" title="Facebook">
+                <img src="assets/img/icons/facebook.svg" alt="">
+            </a>
+            <a href="https://x.com" class="footer__social-link" aria-label="x.com" title="x.com">
+                <img src="assets/img/icons/x.svg" alt="">
+            </a>
+            <a href="https://snapchat.com" class="footer__social-link" aria-label="Snapchat" title="Snapchat">
+                <img src="assets/img/icons/snapchat.svg" alt="">
+            </a>
+            <a href="https://instagram.com" class="footer__social-link" aria-label="Instagram" title="Instagram">
+                <img src="assets/img/icons/instagram.svg" alt="">
+            </a>
+        </div>
+
+        <!-- J'ai changé la couleur de police du copyright car y avait un probleme de contraste pour l'accessibilité (cf: https://dequeuniversity.com/rules/axe/4.10/color-contrast) -->
+        <div class="footer__copyright">
+            <p>Le Centre Galactique © 2017</p>
+        </div>
     </footer>
 </body>
 </html>

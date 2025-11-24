@@ -1,0 +1,117 @@
+@use 'variables' as *;
+
+.footer {
+    background-color: $color-nav-bg;
+    color: $color-text-light;
+    padding: 3rem 2rem;
+
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    &__title {
+        font-size: $font-size-title;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: $color-footer-text;
+    }
+
+    &__menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__menu-item {
+        font-size: $font-size-subtitle;
+        margin-bottom: 0.5rem;
+    }
+
+    &__menu-link {
+        color: $color-footer-text;
+        text-decoration: none;
+        transition: opacity 0.3s ease;
+
+        &:hover,
+        &:focus {
+            opacity: 0.7;
+        }
+
+        &:focus {
+            outline: 2px solid $color-text-light;
+            outline-offset: 2px;
+        }
+    }
+
+    &__text {
+        font-size: $font-size-subtitle;
+        line-height: 1.6;
+        margin: 0;
+        color: $color-footer-text;
+    }
+
+    &__social {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 2rem 0;
+    }
+
+    &__social-link {
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: center;
+        border: 1px solid $color-footer-text;
+        border-radius: 50%;
+        padding: .7rem;
+
+        &:hover,
+        &:focus {
+            opacity: 0.7;
+        }
+
+        img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &__copyright {
+        text-align: center;
+        padding-top: 1.5rem;
+        font-size: $font-size-subtitle;
+        color: $color-footer-copyright;
+
+        p {
+            margin: 0;
+        }
+    }
+}
+
+@media (min-width: $breakpoint-tablet) {
+    .footer {
+        &__content {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        &__column--wide {
+            grid-column: span 2;
+        }
+    }
+}
+
+@media (min-width: $breakpoint-desktop) {
+    .footer {
+        &__content {
+            grid-template-columns: 1fr 1fr 1.5fr;
+        }
+
+        &__column--wide {
+            grid-column: auto;
+        }
+    }
+}
