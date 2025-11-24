@@ -39,6 +39,7 @@ export const calculateDiscount = (amount: number, type: DiscountType, years: num
     if(!checkIfTypeExist(type)) return AMOUNT_FOR_INEXISTENT_DISCOUNT_TYPE;
 
     // On a besoin d'arrondir car le calcul renvoi plusieurs décimales après la virgule et ça casse les tests. Puis c'est pas logique d'avoir un prix avec plus de 2 décimales (cf: https://stackoverflow.com/questions/3163070/javascript-displaying-a-float-to-2-decimal-places)
+    // TODO: On pourrait storer l'amount en entier de centimes plutot que des euros à virgule (cf: https://www.robinwieruch.de/javascript-rounding-errors/#:~:text=Rounding%20errors%20are%20a%20common,is%20not%200.3%20but%200.30000000000000004%20.)
     return round(applyDiscounts(amount, discountRateByType, discountRateByLoyaltyYears));
 }
 
