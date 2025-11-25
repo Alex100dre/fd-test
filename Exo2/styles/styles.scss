@@ -1,6 +1,7 @@
-@use 'fonts';
-@use 'variables';
+@use 'variables/fonts';
+@use 'variables/variables';
 @use 'base';
-@use 'header';
-@use 'nav';
-@use 'footer';
+@use 'components/header';
+@use 'components/nav';
+@use 'components/carousel/carousel';
+@use 'components/footer';

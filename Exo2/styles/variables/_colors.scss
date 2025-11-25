@@ -1,0 +1,43 @@
+$color-outline: #037adf;
+$color-main-bg: #ECF1F7;
+// Texte
+$color-title-dark: #2A2649;
+$color-text-light: #FFF;
+$color-footer-text: #C5C6CA;
+// J'ai changé la couleur de police du copyright car y avait un probleme de contraste pour l'accessibilité (cf: https://dequeuniversity.com/rules/axe/4.10/color-contrast)
+$color-footer-copyright: #B2B3B8;
+
+// Overlay
+$color-overlay-dark: rgba(0, 0, 0, 0.3);
+
+$color-nav-bg: #24272C;
+
+// Catégories (J'ai modifié le style en badge fond clair + texte foncé pour l'accessibilité, encore un soucis de ratio de contraste trop faible)
+// Star
+$color-category-star-text: #074100;
+$color-category-star-bg: #b5efb5;
+
+// Galaxy
+$color-category-galaxy-text: #6B0000;
+$color-category-galaxy-bg: #FFCCCB;
+
+// Black hole
+$color-category-black-hole-text: #662D00;
+$color-category-black-hole-bg: #FFD7B3;
+
+// Planet
+$color-category-planet-text: #3D1F08;
+$color-category-planet-bg: #D4B59E;
+
+// Nebula
+$color-category-nebula-text: #3A1B5B;
+$color-category-nebula-bg: #E6D5F5;
+
+// Card
+$color-card-bg: #FFF;
+$color-card-thumbnail-bg: #8890a4;
+$color-card-title: #03182A;
+$color-card-text: #4F4F4F;
+$color-card-link: #333;
+$color-card-link-border: #D8D8D8;
+$color-card-link__hover: #037adf;

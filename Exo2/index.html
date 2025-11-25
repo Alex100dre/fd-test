@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Le centre galactique</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <script src="scripts/carousel.js" defer></script>
 </head>
 <body>
     <header class="header">
@@ -25,14 +26,215 @@
         </ul>
     </nav>
 
-    <!-- TODO: à supprimer asap - Blocs temporaires pour tester la navigation -->
-    <section id="carrousel" style="min-height: 60vh; background-color: #ff0000; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-        CARROUSEL
-    </section>
+    <main>
+        <div class="container">
+            <section id="carrousel" class="carousel-section">
+                <h2 class="carousel-section__title">Carrousel - vignette simple</h2>
+                <div class="carousel">
+                    <button class="carousel__nav carousel__nav--prev" aria-label="Vignette précédente"></button>
 
-    <section id="carrousel2" style="min-height: 60vh; background-color: #0000ffff; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-        CARROUSEL 2
-    </section>
+                    <div class="carousel__container">
+                        <ul class="carousel__content">
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/geante-bleue.webp"
+                                         alt="Étoile supergéante bleue"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Géante bleue</h3>
+                                    <span class="carousel__card__category carousel__card__category--star">Étoile</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquam at, autem, consequatur, doloremque ea id ipsa maiores nobis numquam porro repellat sed sit tempora vitae. Ea quia soluta voluptas.</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/voie-lactee.webp"
+                                         alt="Voie lactée"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Voie Lactée</h3>
+                                    <span class="carousel__card__category carousel__card__category--galaxy">Galaxie</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, at ea esse est eveniet ex exercitationem facere fugit laudantium libero nesciunt, officiis quae rem sit sunt voluptate voluptatem, voluptates voluptatibus.</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/trou-noir-supermassif.webp"
+                                         alt="Trou noir supermassif"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Trou noir supermassif</h3>
+                                    <span class="carousel__card__category carousel__card__category--black-hole">Trou noir</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid atque autem dolorem, doloribus fuga iste magnam molestias nisi placeat quae quaerat quas quo repudiandae voluptates? Accusantium dignissimos nesciunt odit!</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/nebuleuse-orion.webp"
+                                         alt="Nébuleuse"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Nébuleuse d'Orion</h3>
+                                    <span class="carousel__card__category carousel__card__category--nebula">Nébuleuse</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad aliquid animi, consectetur consequuntur, cum dolores eum fugit harum, ipsa itaque iure iusto pariatur perspiciatis quas recusandae repellat reprehenderit?</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/galaxie-spirale.webp"
+                                         alt="Galaxie spirale"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Galaxie Spirale</h3>
+                                    <span class="carousel__card__category carousel__card__category--galaxy">Galaxie</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error fugiat itaque labore minima, omnis placeat sequi voluptate. Amet distinctio doloribus eius eos fugit iure labore maxime quidem quos saepe, sequi.</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/geante-gazeuse.webp"
+                                         alt="Planète Jupiter"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Géante gazeuse</h3>
+                                    <span class="carousel__card__category carousel__card__category--planet">Planète</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, assumenda dolorem ipsum necessitatibus non reiciendis repudiandae sequi sunt tenetur. Id laudantium necessitatibus neque quis quisquam, temporibus vitae. A, dicta sunt.</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button class="carousel__nav carousel__nav--next" aria-label="Vignette suivante"></button>
+                </div>
+            </section>
+
+            <section id="carrousel2" class="carousel-section">
+                <h2 class="carousel-section__title">Carrousel 2 - vignette simple</h2>
+                <div class="carousel">
+                    <button class="carousel__nav carousel__nav--prev" aria-label="Vignette précédente"></button>
+
+                    <div class="carousel__container">
+                        <ul class="carousel__content">
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/geante-bleue.webp"
+                                         alt="Étoile supergéante bleue"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Géante bleue</h3>
+                                    <span class="carousel__card__category carousel__card__category--star">Étoile</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquam at, autem, consequatur, doloremque ea id ipsa maiores nobis numquam porro repellat sed sit tempora vitae. Ea quia soluta voluptas.</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/voie-lactee.webp"
+                                         alt="Voie lactée"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Voie Lactée</h3>
+                                    <span class="carousel__card__category carousel__card__category--galaxy">Galaxie</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, at ea esse est eveniet ex exercitationem facere fugit laudantium libero nesciunt, officiis quae rem sit sunt voluptate voluptatem, voluptates voluptatibus.</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/trou-noir-supermassif.webp"
+                                         alt="Trou noir supermassif"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Trou noir supermassif</h3>
+                                    <span class="carousel__card__category carousel__card__category--black-hole">Trou noir</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid atque autem dolorem, doloribus fuga iste magnam molestias nisi placeat quae quaerat quas quo repudiandae voluptates? Accusantium dignissimos nesciunt odit!</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/nebuleuse-orion.webp"
+                                         alt="Nébuleuse"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Nébuleuse d'Orion</h3>
+                                    <span class="carousel__card__category carousel__card__category--nebula">Nébuleuse</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad aliquid animi, consectetur consequuntur, cum dolores eum fugit harum, ipsa itaque iure iusto pariatur perspiciatis quas recusandae repellat reprehenderit?</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/galaxie-spirale.webp"
+                                         alt="Galaxie spirale"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Galaxie Spirale</h3>
+                                    <span class="carousel__card__category carousel__card__category--galaxy">Galaxie</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error fugiat itaque labore minima, omnis placeat sequi voluptate. Amet distinctio doloribus eius eos fugit iure labore maxime quidem quos saepe, sequi.</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+
+                            <li class="carousel__card">
+                                <div class="carousel__card__thumbnail-wrapper">
+                                    <img src="assets/img/thumbnails/geante-gazeuse.webp"
+                                         alt="Planète Jupiter"
+                                         class="carousel__card__thumbnail"
+                                         loading="lazy">
+                                </div>
+                                <div class="carousel__card__content">
+                                    <h3 class="carousel__card__title">Géante gazeuse</h3>
+                                    <span class="carousel__card__category carousel__card__category--planet">Planète</span>
+                                    <p class="carousel__card__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, assumenda dolorem ipsum necessitatibus non reiciendis repudiandae sequi sunt tenetur. Id laudantium necessitatibus neque quis quisquam, temporibus vitae. A, dicta sunt.</p>
+                                    <a href="https://le-dev.com" class="carousel__card__link">voir plus</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button class="carousel__nav carousel__nav--next" aria-label="Vignette suivante"></button>
+                </div>
+            </section>
+        </div>
+    </main>
 
     <footer id="footer" class="footer">
         <div class="footer__content">
@@ -91,7 +293,6 @@
             </a>
         </div>
 
-        <!-- J'ai changé la couleur de police du copyright car y avait un probleme de contraste pour l'accessibilité (cf: https://dequeuniversity.com/rules/axe/4.10/color-contrast) -->
         <div class="footer__copyright">
             <p>Le Centre Galactique © 2017</p>
         </div>

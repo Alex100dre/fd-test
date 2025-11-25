@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use '../variables/variables' as *;
 
 .nav {
     background-color: $color-nav-bg;
@@ -27,7 +27,7 @@
         text-decoration: none;
         font-size: $font-size-text;
         font-weight: 400;
-        transition: opacity 0.3s ease;
+        transition: background-color $animation-duration-global ease, opacity $animation-duration-global ease;
 
         &:hover,
         &:focus {

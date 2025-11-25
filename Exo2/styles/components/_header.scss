@@ -1,8 +1,8 @@
-@use 'variables' as *;
+@use '../variables/variables' as *;
 
 .header {
     min-height: 40vh;
-    background-image: url('../assets/img/header.png');
+    background-image: url('../assets/img/header.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

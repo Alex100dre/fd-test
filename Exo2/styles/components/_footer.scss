@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use '../variables/variables' as *;
 
 .footer {
     background-color: $color-nav-bg;
@@ -33,7 +33,7 @@
     &__menu-link {
         color: $color-footer-text;
         text-decoration: none;
-        transition: opacity 0.3s ease;
+        transition: opacity $animation-duration-global ease;
 
         &:hover,
         &:focus {
@@ -62,7 +62,7 @@
     }
 
     &__social-link {
-        transition: opacity 0.3s ease;
+        transition: opacity $animation-duration-global ease;
         display: flex;
         align-items: center;
         border: 1px solid $color-footer-text;
