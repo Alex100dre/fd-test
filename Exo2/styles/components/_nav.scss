@@ -1,42 +1,52 @@
 @use '../variables/variables' as *;
 
 .nav {
-    background-color: $color-nav-bg;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  background-color: $color-nav-bg;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0;
+
+  &__menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    &--right {
+      margin-left: auto;
+    }
+  }
+
+  &__link {
+    color: $color-text-light;
+    text-decoration: none;
+    font-size: $font-size-text;
+    font-weight: 400;
     padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    transition: background-color $animation-duration-global ease, opacity $animation-duration-global ease;
 
-    &__menu {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        gap: 2rem;
+    &:hover,
+    &:focus {
+      opacity: 0.7;
     }
 
-    &__item {
-        &--right {
-            margin-left: auto;
-        }
+    &:focus {
+      outline: 2px solid $color-text-light;
+      outline-offset: 4px;
     }
 
-    &__link {
-        color: $color-text-light;
-        text-decoration: none;
-        font-size: $font-size-text;
-        font-weight: 400;
-        transition: background-color $animation-duration-global ease, opacity $animation-duration-global ease;
-
-        &:hover,
-        &:focus {
-            opacity: 0.7;
-        }
-
-        &:focus {
-            outline: 2px solid $color-text-light;
-            outline-offset: 4px;
-        }
+    &--active {
+      background-color: #2F2C4C;
     }
+  }
 }
