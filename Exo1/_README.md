@@ -72,3 +72,5 @@ J'ai laissé d'autres commentaires du même genre pour toutes les incertitudes q
 // "Everyone who works in finance and web/software development knows that monetary values should be stored as integers (cents) and not as floating-point numbers (dollar) in the database."
 ```
 
+J'aurais pu également mettre en place un ESLint/TSLint + Prettier.
+
